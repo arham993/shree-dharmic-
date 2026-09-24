@@ -1,8 +1,10 @@
 import Header from "@/components/Header";
 import Reveal from "@/components/Reveal";
 import MembershipFlow from "@/components/MembershipFlow";
+import VideoCarousel from "@/components/VideoCarousel";
 import { Rath, Skyline, Toran, Divider, Diya, Emblem } from "@/components/Art";
-import { SITE, PLANS, formatINR } from "@/lib/site";
+import { SITE, PLANS, VIDEOS, formatINR } from "@/lib/site";
+import { parseVideos } from "@/lib/youtube";
 
 const KANDS = ["Bal Kand", "Ayodhya Kand", "Aranya Kand", "Kishkindha Kand", "Sundar Kand", "Lanka Kand", "Uttar Kand"];
 
@@ -26,9 +28,10 @@ const PILLARS = [
 
 export default function Home() {
   const minPrice = Math.min(...PLANS.map((p) => p.price));
+  const videos = parseVideos(VIDEOS);
   return (
     <>
-      <Header />
+      <Header showVideos={videos.length > 0} />
       <main>
         {/* HERO */}
         <section id="home" className="hero">
@@ -96,6 +99,23 @@ export default function Home() {
           </div>
         </section>
 
+        {/* VIDEOS */}
+        {videos.length > 0 && (
+          <section id="videos" className="section videos">
+            <div className="container">
+              <Reveal>
+                <p className="eyebrow center">झलकियाँ</p>
+                <h2 className="section-title">Glimpses of the Leela</h2>
+                <Divider />
+                <p className="section-lead">Moments from our Ramleela stage. Tap any video to play it right here.</p>
+              </Reveal>
+            </div>
+            <Reveal delay={100}>
+              <VideoCarousel videos={videos} />
+            </Reveal>
+          </section>
+        )}
+
         {/* MEMBERSHIP */}
         <section id="membership" className="section membership">
           <div className="arch-frame" aria-hidden />
@@ -141,7 +161,7 @@ export default function Home() {
           </div>
           <div>
             <h4>Quick links</h4>
-            <p><a href="#about">About</a><br /><a href="#membership">Membership</a><br /><a href="#home">Back to top</a></p>
+            <p><a href="#about">About</a><br />{videos.length > 0 && <><a href="#videos">Videos</a><br /></>}<a href="#membership">Membership</a><br /><a href="#home">Back to top</a></p>
           </div>
         </div>
         <p className="copyright">© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>

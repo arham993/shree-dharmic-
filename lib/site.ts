@@ -1,5 +1,6 @@
-// Central place for committee details and membership plans.
+// Central place for committee details, membership plans and videos.
 // Edit these values — the whole page reads from here.
+import type { VideoLink } from "./youtube";
 
 export const SITE = {
   name: "Shree Dharmic Leela Committee",
@@ -61,6 +62,12 @@ export const PLANS: Plan[] = [
       "Voting rights in the general body",
     ],
   },
+];
+
+// Videos in the "Glimpses" carousel, shown in this order. Paste any YouTube link
+// (Shorts, youtu.be or watch?v=). The title is optional and appears on the card.
+export const VIDEOS: VideoLink[] = [
+  { url: "https://youtube.com/shorts/VtoROnG-OaU?feature=share" },
 ];
 
 export const formatINR = (n: number) =>

@@ -6,11 +6,13 @@ import { SITE } from "@/lib/site";
 const LINKS = [
   { href: "#home", label: "Home" },
   { href: "#about", label: "About" },
+  { href: "#videos", label: "Videos" },
   { href: "#membership", label: "Membership" },
   { href: "#contact", label: "Contact" },
 ];
 
-export default function Header() {
+export default function Header({ showVideos = false }: { showVideos?: boolean }) {
+  const links = LINKS.filter((l) => showVideos || l.href !== "#videos");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function Header() {
           </span>
         </a>
         <nav className={`nav ${open ? "open" : ""}`} aria-label="Main">
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>
           ))}
           <a href="#membership" className="btn btn-primary btn-sm" onClick={() => setOpen(false)}>Apply for Membership</a>
